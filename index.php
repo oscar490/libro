@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,13 +12,18 @@
         $valor = trim(filter_input(INPUT_GET, 'valor'));
         $columna = trim(filter_input(INPUT_GET, 'columna'));
         $pdo = conectar();
-        var_dump($valor);
-        var_dump($columna);
 
         if ($columna === '') {
             $columna = 'titulo';
         }
         $fila = buscarLibro($pdo, $columna, $valor);
+
+        if (isset($_SESSION['mensaje'])) {
+            ?>
+            <h4><?= $_SESSION['mensaje']?></h4>
+            <?php
+            unset($_SESSION['mensaje']);
+        }
 
         ?>
         <form method="get">

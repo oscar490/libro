@@ -37,7 +37,7 @@ INSERT INTO temas (nombre)
 INSERT INTO libros (titulo, autor, num_pags, resumen, tema_id)
      VALUES ('50 sombras de grey', 'Rosalia de Castro', 200,
                 'Grey, jóven multimillonario le gusta el sexo',4),
-            ('El niño del pijama de rayas', 'Cristian Pérez', 240,
+            ('El niño del pijama de rayas', 'Cristian Pérez', 200,
                 'Historia de nazis y un niño...', 2),
             ('La venganza de los museilines','Álvaro Roco', 300,
                 'Aventura sobre un secuestro..', 5 );
