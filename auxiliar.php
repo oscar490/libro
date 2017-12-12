@@ -121,3 +121,18 @@ function comprobarErrores(array $error)
         throw new Exception;
     }
 }
+
+function comprobarParametro($param, array &$error)
+{
+    if ($param === false) {
+        $error[] = 'Parámetro incorrecto';
+    }
+}
+
+function borrar(PDO $pdo, $id)
+{
+    $sent = $pdo->prepare("DELETE FROM libros
+                            WHERE id = :id");
+
+    $sent->execute([":id"=>$id]);
+}
