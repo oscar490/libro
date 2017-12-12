@@ -5,7 +5,7 @@ const CABECERAS = [
     "autor"=>"Autor",
     "resumen"=>"Resumen",
     "num_pags"=>"Número de páginas",
-    "tema"=>"Tema"
+    "nombre"=>"Tema"
 ];
 
 function conectar()
@@ -19,16 +19,39 @@ function conectar()
     }
 }
 
-function buscarLibro(PDO $pdo, string $titulo)
+function seleccion($x, $y)
 {
+    return $x == $y ? 'selected' : '';
+}
+
+function buscarLibro(PDO $pdo, string $columna, string $valor)
+{
+    switch ($columna) {
+        case 'num_pags':
+            $clausulas = "WHERE $columna = :columna";
+            $exec = [":columna"=>$valor];
+            break;
+
+        case 'nombre':
+            $clausulas = "WHERE $columna = :columna";
+            $exec = [":columna"=>$valor];
+            break;
+
+        case 'resumen':
+        default:
+
+            $clausulas = "WHERE lower($columna) LIKE lower(:columna)";
+            $exec = [":columna"=>"%$valor%"];
+    }
+
     $sent = $pdo->prepare("SELECT l.id, titulo, autor, num_pags,
                                 resumen, tema_id, nombre
                              AS tema
                            FROM libros l
                            JOIN temas t ON l.tema_id = t.id
-                          WHERE lower(titulo) LIKE lower(:titulo) ");
+                           $clausulas");
 
-    $sent->execute([":titulo"=>"%$titulo%"]);
+    $sent->execute($exec);
 
     return $sent->fetchAll();
 }
