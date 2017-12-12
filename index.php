@@ -13,7 +13,6 @@
         $pdo = conectar();
         var_dump($valor);
         var_dump($columna);
-
         if ($columna === '') {
             $columna = 'titulo';
         }
