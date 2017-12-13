@@ -199,7 +199,7 @@ function comprobarNumPaginas($numPaginas, array &$error)
 
 function modificar(PDO $pdo, $id, array $datos, array &$error)
 {
-    var_dump($datos);
+
     $sets = [];
     $exec = [];
     foreach ($datos as $k=>$v):
@@ -214,4 +214,38 @@ function modificar(PDO $pdo, $id, array $datos, array &$error)
                            WHERE id = :id");
     $sent->execute($exec);
 
+}
+
+function buscarUsuario(PDO $pdo, $usuario, array &$error)
+{
+    $sent = $pdo->prepare("SELECT *
+                             FROM usuarios
+                            WHERE usuario = :usuario");
+
+    $sent->execute([":usuario"=>$usuario]);
+
+    if ($sent->rowCount() === 0) {
+        $error[] = 'El usuario no existe';
+    }
+
+    return $sent->fetch();
+}
+
+function comprobarUsuario(string $usuario, array &$error)
+{
+    if ($usuario === '') {
+        $error[] = 'El nombre de usuario es obligatorio';
+    }
+}
+
+function comprobarPassword($password1, $password2, &$error )
+{
+    if ($password1 === '') {
+        $error[] = 'El password es obligatorio';
+        return;
+    }
+
+    if (!password_verify($password1, $password2)) {
+        $error[] = 'El password no coincide';
+    }
 }

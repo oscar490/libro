@@ -23,6 +23,18 @@ CREATE TABLE libros
                               ON UPDATE CASCADE
 );
 
+DROP TABLE IF EXISTS usuarios CASCADE;
+
+CREATE TABLE usuarios
+(
+        id      BIGSERIAL     PRIMARY KEY
+    ,   usuario VARCHAR(255)  UNIQUE
+    ,   password VARCHAR(255) NOT NULL
+);
+
+INSERT INTO usuarios (usuario, password)
+     VALUES ('oscar', crypt('oscar', gen_salt('bf', 10)));
+
 
 INSERT INTO temas (nombre)
      VALUES ('Amor'),
