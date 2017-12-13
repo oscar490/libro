@@ -6,6 +6,8 @@
         <title>Lista de Libros</title>
     </head>
     <body>
+
+
         <?php
         require 'auxiliar.php';
 
@@ -23,6 +25,17 @@
             <h4><?= $_SESSION['mensaje']?></h4>
             <?php
             unset($_SESSION['mensaje']);
+        }
+
+        if (isset($_SESSION['login'])) {
+            ?>
+            <h4>Usuario: <?= $_SESSION['login']['usuario'] ?></h4>
+            <h4><a href='logout.php'>Logout</a></h4>
+            <?php
+        } else {
+            ?>
+            <h4><a href='login.php'>Login</a></h4>
+            <?php
         }
 
         ?>
