@@ -4,6 +4,12 @@
     <head>
         <meta charset="utf-8">
         <title>Lista de Libros</title>
+        <style>
+            table {
+                margin-top: 50px;
+                
+            }
+        </style>
     </head>
     <body>
 
@@ -57,5 +63,7 @@
         mostrarTabla($fila);
 
         ?>
+
+        <a href='insertar.php'>Insertar libro</a>
     </body>
 </html>
