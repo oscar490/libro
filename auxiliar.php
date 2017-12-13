@@ -17,6 +17,14 @@ const COLUMNAS = [
     "Operaciones"
 ];
 
+const DEFECTO = [
+    "titulo"=>"",
+    "autor"=>"",
+    "resumen"=>"",
+    "num_pags"=>"",
+    "tema_id"=>"",
+];
+
 function conectar()
 {
     try {
@@ -190,7 +198,7 @@ function comprobarNumPaginas($numPaginas, array &$error)
     ]);
 
     if ($filtro === false) {
-        $error[] = 'El número de páginas debe ser un número entero';
+        $error[] = 'El número de páginas no es válido';
     }
 
 }
@@ -248,4 +256,14 @@ function comprobarPassword($password1, $password2, &$error )
     if (!password_verify($password1, $password2)) {
         $error[] = 'El password no coincide';
     }
+}
+
+function comprobarLogueado()
+{
+    if (isset($_SESSION['login'])) {
+        return true;
+    }
+    $_SESSION['mensaje'] = 'Usuario no identificado';
+    header('Location: index.php');
+    return false;
 }

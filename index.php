@@ -57,5 +57,7 @@
         mostrarTabla($fila);
 
         ?>
+
+        <a href='insertar.php'>Insertar libro</a>
     </body>
 </html>
