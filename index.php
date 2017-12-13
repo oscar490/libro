@@ -13,7 +13,7 @@
         $columna = trim(filter_input(INPUT_GET, 'columna'));
         $pdo = conectar();
 
-        if ($columna === '') {
+        if (!in_array($columna, array_keys(CABECERAS))) {
             $columna = 'titulo';
         }
         $fila = buscarLibro($pdo, $columna, $valor);
