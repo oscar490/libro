@@ -7,7 +7,7 @@
         <style>
             table {
                 margin-top: 50px;
-                
+
             }
         </style>
     </head>
@@ -20,6 +20,13 @@
         $valor = trim(filter_input(INPUT_GET, 'valor'));
         $columna = trim(filter_input(INPUT_GET, 'columna'));
         $pdo = conectar();
+        $pag = filter_input(INPUT_GET, 'fila', FILTER_VALIDATE_INT, [
+            "options" => [
+                "default" = 1,
+                "min_range" = 1,
+                "max_range" = FPP,
+            ]
+        ]);
 
         if (!in_array($columna, array_keys(CABECERAS))) {
             $columna = 'titulo';
