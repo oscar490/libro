@@ -19,7 +19,7 @@
             if (!empty($_POST)) {
 
                 $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
-                
+
                 borrar($pdo, $id);
                 $_SESSION['mensaje'] = 'Libro borrado con éxito';
                 header('Location: index.php');

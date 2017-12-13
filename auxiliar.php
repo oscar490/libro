@@ -95,8 +95,9 @@ function mostrarTabla(array $datos)
                 <td><?= $fila['resumen'] ?></td>
                 <td><?= $fila['num_pags'] ?></td>
                 <td><?= $fila['tema'] ?></td>
-                <td >
+                <td colspan="2">
                     <a href="borrar.php?id=<?= $fila['id'] ?>">Borrar</a>
+                    <a href="modificar.php?id=<?= $fila['id'] ?>">Modificar</a>
                 </td>
             </tr>
     <?php endforeach ?>
@@ -135,4 +136,18 @@ function borrar(PDO $pdo, $id)
                             WHERE id = :id");
 
     $sent->execute([":id"=>$id]);
+}
+
+function listaDesplegable($id)
+{
+    $pdo = conectar();
+    $sent = $pdo->query("SELECT * FROM temas");
+
+    foreach ($sent as $fila):
+        ?>
+        <option value="<?= $fila['id']?>" <?= seleccion($id, $fila['id']) ?>>
+            <?= $fila['nombre'] ?>
+        </option>
+        <?php
+    endforeach;
 }
