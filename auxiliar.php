@@ -1,5 +1,7 @@
 <?php
 
+define('FPP', 5);
+
 const CABECERAS = [
     "titulo"=>"Título",
     "autor"=>"Autor",
@@ -88,6 +90,7 @@ function mostrarTabla(array $datos)
 {
 
     ?>
+    <div align='center'>
     <table border="1">
         <thead>
     <?php foreach (COLUMNAS as $k => $v): ?>
@@ -111,6 +114,7 @@ function mostrarTabla(array $datos)
     <?php endforeach ?>
         </tbody>
     </table>
+    </div>
     <?php
 
 }
@@ -221,6 +225,30 @@ function modificar(PDO $pdo, $id, array $datos, array &$error)
                             SET $campos
                            WHERE id = :id");
     $sent->execute($exec);
+
+}
+
+function insertar(PDO $pdo, array $datos)
+{
+    $colum = [];
+    $exec = [];
+    foreach ($datos as $k => $v):
+        if ($v === '') {
+            continue;
+        }
+        $colum[] = $k;
+        $exec[] = $v;
+    endforeach;
+    $values = array_fill(0, count($colum), '?');
+
+    $columnas = implode(', ', $colum);
+    $valores = implode(', ', $values);
+
+    $sent = $pdo->prepare("INSERT INTO libros ($columnas)
+                            VALUES ($valores)");
+
+    $sent->execute($exec);
+
 
 }
 

@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,6 +8,10 @@
     <body>
         <?php
         require 'auxiliar.php';
+
+        if (!comprobarLogueado()) {
+            return;
+        }
 
         $libro = filter_input(INPUT_POST, 'libro', FILTER_DEFAULT,
             FILTER_REQUIRE_ARRAY) ?? [];
@@ -21,6 +26,10 @@
                 comprobarAutor($libro['autor'], $error);
                 comprobarNumPaginas($libro['num_pags'], $error);
                 comprobarErrores($error);
+                insertar($pdo, $libro);
+                $_SESSION['mensaje'] = 'Se ha insertado el libro correctamente';
+                header('Location: index.php');
+
             } catch (Exception $e) {
                 mostrarErrores($error);
             }

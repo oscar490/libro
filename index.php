@@ -4,6 +4,12 @@
     <head>
         <meta charset="utf-8">
         <title>Lista de Libros</title>
+        <style>
+            table {
+                margin-top: 50px;
+                
+            }
+        </style>
     </head>
     <body>
 
