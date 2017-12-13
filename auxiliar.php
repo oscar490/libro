@@ -138,6 +138,8 @@ function borrar(PDO $pdo, $id)
     $sent->execute([":id"=>$id]);
 }
 
+
+
 function listaDesplegable($id)
 {
     $pdo = conectar();
@@ -150,4 +152,66 @@ function listaDesplegable($id)
         </option>
         <?php
     endforeach;
+}
+
+function comprobarTitulo(string $titulo, array &$error)
+{
+    if ($titulo === '') {
+        $error[] = 'El título es obligatorio';
+    }
+
+    if (mb_strlen($titulo) > 255) {
+        $error[] = 'El título es demasiado largo';
+    }
+}
+
+function comprobarAutor(string $autor, array &$error)
+{
+    if ($autor === '') {
+        $error[] = 'El nombre del autor es obligatorio';
+    }
+
+    if (mb_strlen($autor) > 255) {
+        $error[] = 'El nombre del autor es demasiado largo';
+    }
+}
+
+function comprobarNumPaginas($numPaginas, array &$error)
+{
+    if ($numPaginas === '') {
+        return;
+    }
+
+    $filtro = filter_var($numPaginas, FILTER_VALIDATE_INT, [
+        'options' => [
+            'min_range' => 0,
+            'max_range' => 9999,
+        ]
+    ]);
+
+    if ($filtro === false) {
+        $error[] = 'El número de páginas debe ser un número entero';
+    }
+
+}
+
+
+
+function modificar(PDO $pdo, $id, array $datos, array &$error)
+{
+    var_dump($datos);
+    $sets = [];
+    $exec = [];
+    foreach ($datos as $k=>$v):
+        $sets[] = "$k = :$k";
+        $exec[":$k"] = $v === '' ? null : $v;
+    endforeach;
+    $exec[":id"] = $id;
+
+    $campos = implode(', ', $sets);
+    $sent = $pdo->prepare("UPDATE libros
+                            SET $campos
+                           WHERE id = :id");
+    $sent->execute($exec);
+
 }
